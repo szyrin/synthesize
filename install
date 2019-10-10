@@ -2,6 +2,9 @@
 # Graphite installation script for Ubuntu 14.04
 # Jason Dixon <jason@dixongroup.net>
 
+# Remove python-openssl
+apt-get -y remove python-openssl
+
 SYNTHESIZE_HOME=$( cd "$( dirname "$0" )" && pwd )
 UBUNTU_RELEASE=`lsb_release -a 2>/dev/null | grep '^Descrip' | cut -s -f 2`
 
@@ -71,7 +74,7 @@ git clone https://github.com/armon/statsite.git
 # Build and install Graphite/Carbon/Whisper and Statsite
 cd whisper; git checkout ${GRAPHITE_RELEASE}; python setup.py install
 cd ../carbon; git checkout ${GRAPHITE_RELEASE}; pip install -r requirements.txt; python setup.py install
-cd ../graphite-web; git checkout ${GRAPHITE_RELEASE}; patch -p0 < ${SYNTHESIZE_HOME}/patches/graphite-web-001.diff; pip install -r requirements.txt; python check-dependencies.py; python setup.py install
+cd ../graphite-web; git checkout ${GRAPHITE_RELEASE}; patch -p0 < ${SYNTHESIZE_HOME}/patches/graphite-web-001.diff; patch -p0 < ${SYNTHESIZE_HOME}/patches/graphite-web-002.diff ; pip install -r requirements.txt; python check-dependencies.py; python setup.py install
 cd ../statsite; ./autogen.sh; ./configure; make; cp statsite /usr/local/sbin/; cp sinks/graphite.py /usr/local/sbin/statsite-sink-graphite.py
 
 # Update txamqp to support RabbitMQ 2.4+

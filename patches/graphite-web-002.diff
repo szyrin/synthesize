@@ -1,0 +1,10 @@
+--- requirements.txt    2019-10-10 15:17:57.859649851 +0000
++++ requirements-new.txt        2019-10-10 15:37:30.215694529 +0000
+@@ -49,6 +49,6 @@
+ git+git://github.com/graphite-project/whisper.git#egg=whisper
+ # Ceres is optional
+ # git+git://github.com/graphite-project/ceres.git#egg=ceres
+-whitenoise
++whitenoise==3.3.1
+ scandir
+ urllib3
